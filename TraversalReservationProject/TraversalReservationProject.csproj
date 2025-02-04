@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\login-form-15\.DS_Store" />
+    <None Include="wwwroot\login-form-15\css\.DS_Store" />
+    <None Include="wwwroot\login-form-15\css\bootstrap\.DS_Store" />
+    <None Include="wwwroot\login-form-15\css\bootstrap\mixins\.DS_Store" />
+    <None Include="wwwroot\login-form-15\fonts\.DS_Store" />
+    <None Include="wwwroot\login-form-15\images\.DS_Store" />
+    <None Include="wwwroot\login-form-15\js\.DS_Store" />
+    <None Include="wwwroot\login-form-15\scss\.DS_Store" />
+    <None Include="wwwroot\login-form-15\scss\bootstrap\.DS_Store" />
+    <None Include="wwwroot\sneat-1.0.0\.github\workflows\handle-new-issue-comment.yml" />
+    <None Include="wwwroot\sneat-1.0.0\.github\workflows\handle-new-issue.yml" />
+    <None Include="wwwroot\sneat-1.0.0\.github\workflows\issue-staler.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Entity\Entity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Member\Data\" />
+    <Folder Include="wwwroot\userimages\" />
+  </ItemGroup>
+
+</Project>

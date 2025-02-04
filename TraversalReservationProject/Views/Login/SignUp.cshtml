@@ -1,0 +1,74 @@
+﻿@model UserRegisterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Traversal Register</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="~/colorlib-regform-31/css/roboto-font.css">
+	<link rel="stylesheet" type="text/css" href="~/colorlib-regform-31/fonts/font-awesome-5/css/fontawesome-all.min.css">
+	<!-- Main Style Css -->
+	<link rel="stylesheet" href="~/colorlib-regform-31/css/style.css" />
+</head>
+<body class="form-v5">
+	<div class="page-content">
+		<div class="form-v5-content">
+			<form class="form-detail" method="post" asp-controller="Login" asp-action="SignUp">
+				<h2>Misafir Kayıt Ekranı</h2>
+				<div class="form-row">
+					<input type="text" asp-for="Name" class="input-text" placeholder="Adınız" required>
+					<span asp-validation-for="Name" class="text-danger"></span>
+					<i class="fas fa-user"></i>
+				</div>
+				<div class="form-row">
+					<input type="text" asp-for="Surname" class="input-text" placeholder="Soyadınız" required>
+					<span asp-validation-for="Surname" class="text-danger"></span>
+					<i class="fas fa-user"></i>
+				</div>
+
+				<div class="form-row">
+					<input type="email" asp-for="Email" class="input-text" placeholder="Email" required>
+					<span asp-validation-for="Email" class="text-danger"></span>
+					<i class="fas fa-envelope"></i>
+				</div>
+				<div class="form-row">
+					<input type="text" asp-for="UserName" class="input-text" placeholder="Username" required>
+					<span asp-validation-for="UserName" class="text-danger"></span>
+					<i class="fas fa-envelope"></i>
+				</div>
+
+				<div class="form-row">
+					<input type="password" asp-for="Password" class="input-text" placeholder="Password" required>
+					<span asp-validation-for="Password" class="text-danger"></span>
+					<i class="fas fa-lock"></i>
+				</div>
+
+				<div class="form-row">
+					<input type="password" asp-for="ConfirmPassword" class="input-text" placeholder="Confirm Password" required>
+					<span asp-validation-for="ConfirmPassword	" class="text-danger"></span>
+					<i class="fas fa-lock"></i>
+				</div>	
+				<div class="text-danger" asp-validation-summary="ModelOnly">
+
+				</div>
+				
+				<div class="form-row-last">
+					<button type="submit" asp-controller="Login" asp-action="SignUp" class="register">
+						Kayıt Ol
+					</button>
+					<p class="text-center">
+						Zaten bir hesabın var mı?
+						<a asp-controller="Login" asp-action="SignIn">Giriş Yap</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
