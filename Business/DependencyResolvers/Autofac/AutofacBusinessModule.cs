@@ -52,6 +52,15 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AppUserManager>().As<IAppUserService>().SingleInstance();
             builder.RegisterType<EfAppUserDal>().As<IAppUserDal>().SingleInstance();
 
+            builder.RegisterType<ExcelManager>().As<IExcelService>().SingleInstance();
+            builder.RegisterType<PdfManager>().As<IPdfService>().SingleInstance();
+
+            builder.RegisterType<ContactUsManager>().As<IContactUsService>().SingleInstance();
+            builder.RegisterType<EfContactUsDal>().As<IContactUsDal>().SingleInstance();
+
+            builder.RegisterType<AnnouncementManager>().As<IAnnouncementService>().SingleInstance();
+            builder.RegisterType<EfAnnouncementDal>().As<IAnnouncementDal>().SingleInstance();
+
 
         }
     }

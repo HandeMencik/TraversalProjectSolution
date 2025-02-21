@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Context
 {
-    public class TraversalContext : IdentityDbContext<AppUser,AppRole,string>
+    public class TraversalContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public TraversalContext()
         {
@@ -26,6 +26,7 @@ namespace DataAccess.Context
 
         public DbSet<About> Abouts { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactUs> ContactUses { get; set; }
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<FeatureTwo> FeatureTwos { get; set; }
@@ -35,6 +36,7 @@ namespace DataAccess.Context
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

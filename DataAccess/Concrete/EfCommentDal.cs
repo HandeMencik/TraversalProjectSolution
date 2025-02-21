@@ -24,7 +24,7 @@ namespace DataAccess.Concrete
             {
                 return context.Comments
                     .Include(x => x.Destination)
-                    .Where(filter) // Filtreyi burada kullanıyoruz
+                    .Where(filter) 
                     .ToList();
             }
         }

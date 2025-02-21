@@ -61,13 +61,27 @@ namespace TraversalReservationProject.Areas.Admin.Controllers
 			_guideService.Update(guide);
 			return RedirectToAction("Index");
         }
-		public IActionResult ChangeToTrue(int id)
-		{
-			return RedirectToAction("Index");
-		}
-        public IActionResult ChangeToFalse(int id)
+        public IActionResult ChangeStatus(int id)
         {
-            return RedirectToAction("Index");
+            var guide = _guideService.GetById(id);
+            if (guide.Success && guide.Data != null)
+            {
+                guide.Data.Status = !guide.Data.Status; // Mevcut durumu tersine çevir
+                _guideService.Update(guide.Data);
+
+                // Yeni durumu JSON olarak döndür
+                return Json(new { success = true, newStatus = guide.Data.Status });
+            }
+
+            return Json(new { success = false });
         }
+  //      public IActionResult ChangeToTrue(int id)
+		//{
+		//	return RedirectToAction("Index");
+		//}
+  //      public IActionResult ChangeToFalse(int id)
+  //      {
+  //          return RedirectToAction("Index");
+  //      }
     }
 }

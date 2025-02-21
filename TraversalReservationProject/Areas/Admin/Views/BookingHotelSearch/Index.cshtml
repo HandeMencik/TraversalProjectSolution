@@ -1,0 +1,39 @@
+﻿@model TraversalReservationProject.Areas.Admin.Models.BookingHotelSearchViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<h1>Booking Otel Rezervasyon Sayfası</h1>
+
+<h3>Arama yapılan şehir: Paris/Fransa</h3>
+
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>Otel Adı</th>
+        <th>Otel Puanı</th>
+        <th>Otel Değerlendirmesi</th>
+        <th>Detaylar</th>
+    </tr>
+<br />
+    <h5>Oteller Listesi</h5>
+    <ul>
+        @foreach (var hotel in Model.data.hotels)
+        {
+           
+                count++;
+            <tr>
+                <td>@count</td>
+                <td>@hotel.property?.name</td>
+                <td>@hotel.property?.reviewScore</td>
+                <td>@hotel.property?.reviewScoreWord</td>
+            <td><a href="#" class="btn btn-outline-dark">Detaylar</a></td>
+            </tr>
+        }
+    </ul>
+
+
+   
+</table>

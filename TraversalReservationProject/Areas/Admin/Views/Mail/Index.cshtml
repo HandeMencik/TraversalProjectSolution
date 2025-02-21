@@ -1,0 +1,28 @@
+﻿@model TraversalReservationProject.Models.MailRequest
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Yeni Mail Gönderme Sayfası</h1>
+<form method="post" class="form-form-action">
+
+   
+    <input class="form-control" type="text" name="Name" placeholder="Adınız" required>
+    <br />  
+    <br />
+    <input class="form-control" type="email" name="SenderMail" placeholder="Gönderen Mail" required>
+    <br />  
+    <br />
+    <input class="form-control" type="email" name="ReceiverMail" placeholder="Alıcı Mail" required>
+    <br />
+    <br />
+    <input class="form-control" type="text" name="Subject" placeholder="Konu" required>
+    <br />    
+    <br />
+    <textarea class="form-control" name="Body" placeholder="Mesajınız" required></textarea>
+    <br />
+    <br />
+    <button type="submit">Gönder</button>
+</form>
+

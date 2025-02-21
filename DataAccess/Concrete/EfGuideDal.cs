@@ -15,5 +15,15 @@ namespace DataAccess.Concrete
         public EfGuideDal(TraversalContext context) : base(context)
         {
         }
+
+        public void ChangeToFalseByGuide(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeToTrueByGuide(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

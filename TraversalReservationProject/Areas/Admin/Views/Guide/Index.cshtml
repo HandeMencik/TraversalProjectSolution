@@ -31,21 +31,48 @@
             <td>@item.Name</td>
             <td>@item.Description</td>
 
-
-            @{
-                if (item.Status == true)
-                {
-                    <td><a href="/Admin/Guide/ChangeToFalse/@item.GuideId" class="btn btn-outline-warning">Pasif Yap</a></td>
-                }
-                else
-                {
-                    <td><a href="/Admin/Guide/ChangeToTrue/@item.GuideId" class="btn btn-outline-info">Aktif Yap</a></td>
-                }
-            }
+            <td>
+                <button class="status-btn btn @(item.Status ? "btn-outline-warning" : "btn-outline-info")"
+                        data-id="@item.GuideId"
+                        data-status="@item.Status">
+                    @(item.Status ? "Pasif Yap" : "Aktif Yap")
+                </button>
+            </td>
+      
 
             <td><a href="/Admin/Guide/Update/" class="btn btn-outline-success">Düzenle</a></td>
         </tr>
     }
 </table>
 <a href="/Admin/Guide/Add/" class="btn btn-outline-primary">Yeni Rehber Girişi</a>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".status-btn").click(function () {
+            var button = $(this);
+            var id = button.data("id");
+            var currentStatus = button.data("status");
+
+            $.ajax({
+                url: "/Admin/Guide/ChangeStatus/" + id,
+                type: "GET",
+                success: function (response) {
+                    if (response.success) {
+                        if (response.newStatus) {
+                            button.removeClass("btn-outline-info").addClass("btn-outline-warning");
+                            button.text("Pasif Yap");
+                        } else {
+                            button.removeClass("btn-outline-warning").addClass("btn-outline-info");
+                            button.text("Aktif Yap");
+                        }
+                        button.data("status", response.newStatus);
+                    }
+                },
+                error: function () {
+                    alert("Durum değiştirilemedi!");
+                }
+            });
+        });
+    });
+</script>
 

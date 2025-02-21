@@ -10,5 +10,7 @@ namespace DataAccess.Abstract
 {
     public interface IGuideDal:IEntityRepository<Guide>
     {
+        void ChangeToTrueByGuide(int id);
+        void ChangeToFalseByGuide(int id);
     }
 }
