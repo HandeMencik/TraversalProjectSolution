@@ -4,6 +4,7 @@ using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.Context;
+using DataAccess.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,36 +31,41 @@ namespace Business.DependencyResolvers.Autofac
                 return new TraversalContext(optionsBuilder.Options);
             }).InstancePerLifetimeScope();
 
-            builder.RegisterType<DestinationManager>().As<IDestinationService>().SingleInstance();
-            builder.RegisterType<EfDestinationDal>().As<IDestinationDal>().SingleInstance();
+            builder.RegisterType<DestinationManager>().As<IDestinationService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfDestinationDal>().As<IDestinationDal>().InstancePerLifetimeScope();
 
-            builder.RegisterType<SubAboutManager>().As<ISubAboutService>().SingleInstance();
-            builder.RegisterType<EfSubAboutDal>().As<ISubAboutDal>().SingleInstance();
+            builder.RegisterType<SubAboutManager>().As<ISubAboutService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfSubAboutDal>().As<ISubAboutDal>().InstancePerLifetimeScope();
 
-            builder.RegisterType<TestimonialManager>().As<ITestimonialService>().SingleInstance();
-            builder.RegisterType<EfTestimonialDal>().As<ITestimonialDal>().SingleInstance();
+            builder.RegisterType<TestimonialManager>().As<ITestimonialService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfTestimonialDal>().As<ITestimonialDal>().InstancePerLifetimeScope();
 
 
-            builder.RegisterType<CommentManager>().As<ICommentService>().SingleInstance();
-            builder.RegisterType<EfCommentDal>().As<ICommentDal>().SingleInstance();
+            builder.RegisterType<CommentManager>().As<ICommentService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfCommentDal>().As<ICommentDal>().InstancePerLifetimeScope();
 
-            builder.RegisterType<ReservationManager>().As<IReservationService>().SingleInstance();
-            builder.RegisterType<EfReservationDal>().As<IReservationDal>().SingleInstance();
+            builder.RegisterType<ReservationManager>().As<IReservationService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfReservationDal>().As<IReservationDal>().InstancePerLifetimeScope();
 
-            builder.RegisterType<GuideManager>().As<IGuideService>().SingleInstance();
-            builder.RegisterType<EfGuideDal>().As<IGuideDal>().SingleInstance();
+            builder.RegisterType<GuideManager>().As<IGuideService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfGuideDal>().As<IGuideDal>().InstancePerLifetimeScope();
 
-            builder.RegisterType<AppUserManager>().As<IAppUserService>().SingleInstance();
-            builder.RegisterType<EfAppUserDal>().As<IAppUserDal>().SingleInstance();
+            builder.RegisterType<AppUserManager>().As<IAppUserService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfAppUserDal>().As<IAppUserDal>().InstancePerLifetimeScope();
 
-            builder.RegisterType<ExcelManager>().As<IExcelService>().SingleInstance();
-            builder.RegisterType<PdfManager>().As<IPdfService>().SingleInstance();
+            builder.RegisterType<ExcelManager>().As<IExcelService>().InstancePerLifetimeScope();
+            builder.RegisterType<PdfManager>().As<IPdfService>().InstancePerLifetimeScope();
 
-            builder.RegisterType<ContactUsManager>().As<IContactUsService>().SingleInstance();
-            builder.RegisterType<EfContactUsDal>().As<IContactUsDal>().SingleInstance();
+            builder.RegisterType<ContactUsManager>().As<IContactUsService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfContactUsDal>().As<IContactUsDal>().InstancePerLifetimeScope();
 
-            builder.RegisterType<AnnouncementManager>().As<IAnnouncementService>().SingleInstance();
-            builder.RegisterType<EfAnnouncementDal>().As<IAnnouncementDal>().SingleInstance();
+            builder.RegisterType<AnnouncementManager>().As<IAnnouncementService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfAnnouncementDal>().As<IAnnouncementDal>().InstancePerLifetimeScope();
+
+            builder.RegisterType<AccountManager>().As<IAccountService>().InstancePerLifetimeScope();
+            builder.RegisterType<EfAccountDal>().As<IAccountDal>().InstancePerLifetimeScope();
+
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
 
         }

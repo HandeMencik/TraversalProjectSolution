@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,18 @@ namespace Business.Concrete
     public class ContactUsManager : IContactUsService
     {
         IContactUsDal _contactUsDal;
+        IUnitOfWork _unitOfWork;
 
-        public ContactUsManager(IContactUsDal contactUsDal)
+        public ContactUsManager(IContactUsDal contactUsDal, IUnitOfWork unitOfWork)
         {
             _contactUsDal = contactUsDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(ContactUs contactUs)
         {
           _contactUsDal.Add(contactUs);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -33,6 +37,7 @@ namespace Business.Concrete
         public IResult Delete(ContactUs contactUs)
         {
             _contactUsDal.Delete(contactUs);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -48,7 +53,8 @@ namespace Business.Concrete
 
         public IDataResult<List<ContactUs>> GetListByFalse()
         {
-            throw new NotImplementedException();
+            var results = _contactUsDal.GetListByFalse();
+            return new SuccessDataResult<List<ContactUs>>(results.Data);
         }
 
         public IDataResult<List<ContactUs>> GetListByTrue()
@@ -60,6 +66,7 @@ namespace Business.Concrete
         public IResult Update(ContactUs contactUs)
         {
             _contactUsDal.Update(contactUs);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

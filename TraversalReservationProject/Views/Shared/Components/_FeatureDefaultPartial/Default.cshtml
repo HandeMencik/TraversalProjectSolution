@@ -1,80 +1,53 @@
-﻿<div class="best-rooms py-5">
+﻿@using Entity.Concrete
+@model List<Destination>
+@{
+    var firstItem = Model.FirstOrDefault(); // İlk destinasyonu al
+    var otherItems = Model.Skip(1).ToList(); // Diğer destinasyonları listele
+}
+
+<div class="best-rooms py-5">
     <div class="container py-md-5">
-        <div class="ban-content-inf row">
-            <div class="maghny-gd-1 col-lg-6">
-                <div class="maghny-grid">
-                    <figure class="effect-lily border-radius  m-0">
-                        <img class="img-fluid" src="~/Traversal-Starter/assets/images/g10.jpg" alt="" />
-                        <figcaption>
-                            <div>
-                                <h4>3Days, 4 Nights</h4>
-                                <p>From 1720$ </p>
+        <div class="row g-3">
+            <!-- Büyük Görsel (Sol Taraf) -->
+            @if (firstItem != null)
+            {
+                <div class="col-lg-6 d-flex align-items-stretch">
+                    <div class="maghny-grid w-100">
+                        <figure class="effect-lily border-radius m-0">
+                            <img class="img-fluid w-100 h-200 object-cover" src="@firstItem.ImageTwo" alt="" />
+                            <figcaption>
+                                <div>
+                                    <h4>@firstItem.DayNight</h4>
+                                    <p>@firstItem.Price</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            }
+
+            <!-- Küçük Kartlar (Sağ Taraf) -->
+            <div class="col-lg-6 d-flex flex-column">
+                <div class="row g-2">
+                    @foreach (var item in otherItems)
+                    {
+                        <div class="col-6">
+                            <div class="maghny-grid">
+                                <figure class="effect-lily border-radius">
+                                    <img class="img-fluid w-100 h-100 object-cover" src="@item.ImageTwo" alt="" />
+                                    <figcaption>
+                                        <div>
+                                            <h4>@item.DayNight</h4>
+                                            <p>@item.Price</p>
+                                        </div>
+                                    </figcaption>
+                                </figure>
                             </div>
-
-                        </figcaption>
-                    </figure>
+                        </div>
+                    }
                 </div>
             </div>
-            <div class="maghny-gd-1 col-lg-6 mt-lg-0 mt-4">
-                <div class="row">
-                    <div class="maghny-gd-1 col-6">
-                        <div class="maghny-grid">
-                            <figure class="effect-lily border-radius">
-                                <img class="img-fluid" src="~/Traversal-Starter/assets/images/g9.jpg" alt="" />
-                                <figcaption>
-                                    <div>
-                                        <h4>3Days, 4 Nights</h4>
-                                        <p>From 1220$ </p>
-                                    </div>
 
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="maghny-gd-1 col-6">
-                        <div class="maghny-grid">
-                            <figure class="effect-lily border-radius">
-                                <img class="img-fluid" src="~/Traversal-Starter/assets/images/g8.jpg" alt="" />
-                                <figcaption>
-                                    <div>
-                                        <h4>3Days, 4 Nights</h4>
-                                        <p>From 1620$ </p>
-                                    </div>
-
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="maghny-gd-1 col-6 mt-4">
-                        <div class="maghny-grid">
-                            <figure class="effect-lily border-radius">
-                                <img class="img-fluid" src="~/Traversal-Starter/assets/images/g7.jpg" alt="" />
-                                <figcaption>
-                                    <div>
-                                        <h4>3Days, 4 Nights</h4>
-                                        <p>From 1820$ </p>
-                                    </div>
-
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="maghny-gd-1 col-6 mt-4">
-                        <div class="maghny-grid">
-                            <figure class="effect-lily border-radius">
-                                <img class="img-fluid" src="~/Traversal-Starter/assets/images/g6.jpg" alt="" />
-                                <figcaption>
-                                    <div>
-                                        <h4>3Days, 4 Nights</h4>
-                                        <p>From 1520$ </p>
-                                    </div>
-
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

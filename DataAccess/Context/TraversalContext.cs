@@ -17,12 +17,9 @@ namespace DataAccess.Context
         }
         public TraversalContext(DbContextOptions<TraversalContext> options) : base(options)
         {
+
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Server=DESKTOP-44V5O40\SQLEXPRESS; Database=TraversalDb; Integrated Security=True; TrustServerCertificate=True;");
-        //}
 
         public DbSet<About> Abouts { get; set; }
         public DbSet<Contact> Contacts { get; set; }
@@ -37,6 +34,7 @@ namespace DataAccess.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Account>  Accounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

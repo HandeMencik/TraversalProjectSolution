@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,26 @@ namespace Business.Concrete
     public class DestinationManager : IDestinationService
     {
         IDestinationDal _destinationDal;
+        IUnitOfWork _unitOfWork;
 
-        public DestinationManager(IDestinationDal destinationDal)
+
+        public DestinationManager(IDestinationDal destinationDal, IUnitOfWork unitOfWork)
         {
             _destinationDal = destinationDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(Destination destination)
         {
           _destinationDal.Add(destination);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(Destination destination)
         {
             _destinationDal.Delete(destination);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -45,6 +51,7 @@ namespace Business.Concrete
         public IResult Update(Destination destination)
         {
            _destinationDal.Update(destination);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

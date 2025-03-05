@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,25 @@ namespace Business.Concrete
     public class AppUserManager : IAppUserService
     {
         IAppUserDal _appUserDal;
+        IUnitOfWork _unitOfWork;
 
-        public AppUserManager(IAppUserDal appUserDal)
+        public AppUserManager(IAppUserDal appUserDal, IUnitOfWork unitOfWork)
         {
             _appUserDal = appUserDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(AppUser appUser)
         {
             _appUserDal.Add(appUser);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(AppUser appUser)
         {
             _appUserDal.Delete(appUser);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -44,6 +49,7 @@ namespace Business.Concrete
         public IResult Update(AppUser appUser)
         {
             _appUserDal.Update(appUser);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

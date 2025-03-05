@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,25 @@ namespace Business.Concrete
     public class FeatureTwoManager : IFeatureTwoService
     {
         IFeatureTwoDal _featureTwoDal;
+        IUnitOfWork _unitOfWork;
 
-        public FeatureTwoManager(IFeatureTwoDal featureTwoDal)
+        public FeatureTwoManager(IFeatureTwoDal featureTwoDal, IUnitOfWork unitOfWork)
         {
             _featureTwoDal = featureTwoDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(FeatureTwo featureTwo)
         {
            _featureTwoDal.Add(featureTwo);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(FeatureTwo featureTwo)
         {
            _featureTwoDal.Delete(featureTwo);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -44,6 +49,7 @@ namespace Business.Concrete
         public IResult Update(FeatureTwo featureTwo)
         {
            _featureTwoDal.Update(featureTwo);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

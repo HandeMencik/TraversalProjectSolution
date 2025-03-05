@@ -12,6 +12,7 @@ namespace DataAccess.Abstract
     public interface ICommentDal : IEntityRepository<Comment>
     {
         List<Comment> GetDestinationById(Expression<Func<Comment, bool>> filter);
+     
 
     }
 }

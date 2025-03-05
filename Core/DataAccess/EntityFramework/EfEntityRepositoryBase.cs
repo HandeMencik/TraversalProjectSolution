@@ -13,7 +13,7 @@ namespace Core.DataAccess.EntityFramework
         where TEntity : class, IEntity, new()
         where TContext : DbContext
     {
-        private readonly TContext _context;
+        protected readonly TContext _context;
 
         public EfEntityRepositoryBase(TContext context)
         {
@@ -21,18 +21,19 @@ namespace Core.DataAccess.EntityFramework
         }
         public void Add(TEntity entity)
         {
-            var addedEntity = _context.Entry(entity);
-            addedEntity.State = EntityState.Added;
-            _context.SaveChanges();
+            _context.Set<TEntity>().Add(entity);
+            //var addedEntity = _context.Entry(entity);
+            //addedEntity.State = EntityState.Added;
+            //_context.SaveChanges();
         }
 
         public void Delete(TEntity entity)
         {
+            _context.Set<TEntity>().Remove(entity);
+            //var deletedEntity = _context.Entry(entity);
+            //deletedEntity.State = EntityState.Deleted;
+            //_context.SaveChanges();
 
-                var deletedEntity = _context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                _context.SaveChanges();
-            
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
@@ -59,11 +60,11 @@ namespace Core.DataAccess.EntityFramework
 
         public void Update(TEntity entity)
         {
-           
-                var updatedEntity = _context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                _context.SaveChanges();
-            
+            _context.Set<TEntity>().Update(entity);
+            //var updatedEntity = _context.Entry(entity);
+            //updatedEntity.State = EntityState.Modified;
+            //_context.SaveChanges();
+
         }
     }
 }

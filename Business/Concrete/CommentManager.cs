@@ -2,7 +2,10 @@
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,21 +17,34 @@ namespace Business.Concrete
     public class CommentManager : ICommentService
     {
         ICommentDal _commentDal;
+        IUnitOfWork _unitOfWork;
+        UserManager<AppUser> _userManager;
+        IHttpContextAccessor _httpContextAccessor;
 
-        public CommentManager(ICommentDal commentDal)
+        public CommentManager(ICommentDal commentDal, IUnitOfWork unitOfWork, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _commentDal = commentDal;
+            _unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public IResult Add(Comment comment)
+        public Core.Utilities.Results.IResult Add(Comment comment)
         {
+            var currentUser = _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User).Result;
+            if (currentUser != null)
+            {
+                comment.AppUserId = currentUser.Id;
+            }
             _commentDal.Add(comment);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
-        public IResult Delete(Comment comment)
+        public Core.Utilities.Results.IResult Delete(Comment comment)
         {
             _commentDal.Delete(comment);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -46,19 +62,20 @@ namespace Business.Concrete
         {
             if (destinationId == null)
             {
-                return new SuccessDataResult<List<Comment>>(_commentDal.GetAll()); // Tüm yorumları getir
+                return new SuccessDataResult<List<Comment>>(_commentDal.GetDestinationById(x=>true)); // Tüm yorumları getir
             }
 
             return new SuccessDataResult<List<Comment>>(_commentDal.GetDestinationById(x => x.DestinationId == destinationId));
         }
 
+     
 
-
-
-        public IResult Update(Comment comment)
+        public Core.Utilities.Results.IResult Update(Comment comment)
         {
-            _commentDal.Delete(comment);
+            _commentDal.Update(comment);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
+
     }
 }

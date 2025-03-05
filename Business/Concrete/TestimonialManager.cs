@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,25 @@ namespace Business.Concrete
     public class TestimonialManager : ITestimonialService
     {
         ITestimonialDal _testimonialDal;
+        IUnitOfWork _unitOfWork;
 
-        public TestimonialManager(ITestimonialDal testimonialDal)
+        public TestimonialManager(ITestimonialDal testimonialDal, IUnitOfWork unitOfWork)
         {
             _testimonialDal = testimonialDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(Testimonial testimonial)
         {
             _testimonialDal.Add(testimonial);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(Testimonial testimonial)
         {
             _testimonialDal.Delete(testimonial);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -44,6 +49,7 @@ namespace Business.Concrete
         public IResult Update(Testimonial testimonial)
         {
             _testimonialDal.Update(testimonial);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

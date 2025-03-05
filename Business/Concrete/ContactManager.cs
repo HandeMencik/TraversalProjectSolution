@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,40 +12,45 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class ContactManager:IContactService
+    public class ContactManager : IContactService
     {
         IContactDal _contactDal;
+        IUnitOfWork _unitOfWork;
 
-        public ContactManager(IContactDal contactDal)
+        public ContactManager(IContactDal contactDal, IUnitOfWork unitOfWork)
         {
             _contactDal = contactDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(Contact contact)
         {
-           _contactDal.Add(contact);
+            _contactDal.Add(contact);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(Contact contact)
         {
-          _contactDal.Delete(contact);
+            _contactDal.Delete(contact);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IDataResult<List<Contact>> GetAll()
         {
-        return new SuccessDataResult<List<Contact>>(_contactDal.GetAll());
+            return new SuccessDataResult<List<Contact>>(_contactDal.GetAll());
         }
 
         public IDataResult<Contact> GetById(int id)
         {
-            return new SuccessDataResult<Contact>(_contactDal.Get(x=>x.ContactId == id));
+            return new SuccessDataResult<Contact>(_contactDal.Get(x => x.ContactId == id));
         }
 
         public IResult Update(Contact contact)
         {
             _contactDal.Update(contact);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

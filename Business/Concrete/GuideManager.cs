@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,25 @@ namespace Business.Concrete
     public class GuideManager : IGuideService
     {
         IGuideDal _guideDal;
+        IUnitOfWork _unitOfWork;
 
-        public GuideManager(IGuideDal guideDal)
+        public GuideManager(IGuideDal guideDal, IUnitOfWork unitOfWork)
         {
             _guideDal = guideDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(Guide guide)
         {
             _guideDal.Add(guide);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(Guide guide)
         {
             _guideDal.Delete(guide);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -44,6 +49,7 @@ namespace Business.Concrete
         public IResult Update(Guide guide)
         {
            _guideDal.Update(guide);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

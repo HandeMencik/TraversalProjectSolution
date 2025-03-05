@@ -1,11 +1,6 @@
 using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
-using Business.Abstract;
-using Business.Concrete;
 using Business.DependencyResolvers.Autofac;
-using DataAccess.Abstract;
-using DataAccess.Concrete;
 using DataAccess.Context;
 using Entity.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using TraversalReservationProject.CQRS.Handlers.DestinationHandlers;
-using TraversalReservationProject.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,12 +44,20 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new IgnoreAntiforgeryTokenAttribute()); // CSRF hatasý almamak için
 });
 builder.Services.AddScoped<GetAllDestinationQueryHandler>();
+builder.Services.AddScoped<GetDestinationByIdQueryHandler>();
+builder.Services.AddScoped<AddDestinationCommandHandler>();
+builder.Services.AddScoped<DeleteDestinationCommandHandler>();
+builder.Services.AddScoped<UpdateDestinationCommandHandler>();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+
 //  Yetkilendirme Middleware’ini sadece login gerektiren sayfalara uygula
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
 //  Veritabaný baðlantýsýný yapýlandýralým
 Console.WriteLine("Baðlantý Dizesi: " + builder.Configuration.GetConnectionString("DefaultConnection"));
+
 builder.Services.AddDbContext<TraversalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -72,6 +75,7 @@ builder.Services.AddIdentity<AppUser, AppRole>()
 
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddHttpClient();   
 

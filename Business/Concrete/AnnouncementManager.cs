@@ -2,6 +2,7 @@
 using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using Entity.Dto_s;
 using System;
@@ -15,6 +16,7 @@ namespace Business.Concrete
     public class AnnouncementManager : IAnnouncementService
     {
         IAnnouncementDal _announcementDal;
+        IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public AnnouncementManager(IAnnouncementDal announcementDal, IMapper mapper)
@@ -29,12 +31,14 @@ namespace Business.Concrete
             Announcement announcement=_mapper.Map<Announcement>(announcementAddDto);
             announcement.Date = DateTime.Now;
             _announcementDal.Add(announcement);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(Announcement announcement)
         {
             _announcementDal.Delete(announcement);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -60,6 +64,7 @@ namespace Business.Concrete
             }
            _mapper.Map(announcementUpdateDto,existingAnnouncement);
             _announcementDal.Update(existingAnnouncement);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
     }

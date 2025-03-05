@@ -2,6 +2,7 @@
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
+using DataAccess.UnitOfWork;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,25 @@ namespace Business.Concrete
     public class ReservationManager:IReservationService
     {
         IReservationDal _reservationDal;
+        IUnitOfWork _unitOfWork;
 
-        public ReservationManager(IReservationDal reservationDal)
+        public ReservationManager(IReservationDal reservationDal, IUnitOfWork unitOfWork)
         {
             _reservationDal = reservationDal;
+            _unitOfWork = unitOfWork;
         }
 
         public IResult Add(Reservation reservation)
         {
            _reservationDal.Add(reservation);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
         public IResult Delete(Reservation reservation)
         {
             _reservationDal.Delete(reservation);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
 
@@ -59,6 +64,7 @@ namespace Business.Concrete
         public IResult Update(Reservation reservation)
         {
             _reservationDal.Update(reservation);
+            _unitOfWork.Save();
             return new SuccessResult();
         }
         public IDataResult<List<Reservation>> GetReservationById(string id)

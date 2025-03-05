@@ -20,13 +20,15 @@ namespace DataAccess.Concrete
 
         public List<Comment> GetDestinationById(Expression<Func<Comment, bool>> filter)
         {
-            using (var context = new TraversalContext())
-            {
-                return context.Comments
-                    .Include(x => x.Destination)
-                    .Where(filter) 
-                    .ToList();
-            }
+
+            return _context.Comments
+                .Include(x => x.AppUser)
+                .Include(x => x.Destination)
+                .Where(filter)
+                .ToList();
+
         }
+
+      
     }
 }

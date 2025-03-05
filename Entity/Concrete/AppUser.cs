@@ -16,5 +16,6 @@ namespace Entity.Concrete
         public string? Gender { get; set; }
         public string? ImageUrl { get; set; }
         public virtual List<Reservation> Reservations { get; set; }
+        public virtual List<Comment> Comments { get; set; }
     }
 }

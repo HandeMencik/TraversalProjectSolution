@@ -8,10 +8,12 @@ namespace TraversalReservationProject.Controllers
     public class DestinationController : Controller
     {
         private readonly IDestinationService _destinationService;
+        private readonly ICommentService _commentService;
 
-        public DestinationController(IDestinationService destinationService)
+        public DestinationController(IDestinationService destinationService, ICommentService commentService)
         {
             _destinationService = destinationService;
+            _commentService = commentService;
         }
 
         public IActionResult Index()
@@ -23,7 +25,7 @@ namespace TraversalReservationProject.Controllers
             }
             return View();
         }
-
+        [HttpGet]
         public async Task<IActionResult> DestinationDetails(int id)
         {
             ViewBag.Id = id;
@@ -36,9 +38,22 @@ namespace TraversalReservationProject.Controllers
 
         }
         [HttpPost]
-        public IActionResult DestinationDetails(Destination destination)
+        public IActionResult DestinationDetails(Destination destination,Comment comment)
         {
-            return View();
+            // Yorumun hangi destinasyona ait olduğunu belirt
+            comment.DestinationId = destination.DestinationId;
+
+            Console.WriteLine($"Comment: {comment.Content}, DestinationId: {comment.DestinationId}");
+            // Yorum ekleme işlemi
+            var result = _commentService.Add(comment);
+
+            if (result.Success)
+            {
+                return RedirectToAction("DestinationDetails", new { id = destination.DestinationId });
+            }
+
+            // Eğer bir hata varsa, aynı sayfayı tekrar göster
+            return View(destination);
         }
     }
 }
